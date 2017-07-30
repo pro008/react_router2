@@ -49,7 +49,6 @@ class BookForm extends Component {
 	          	<HelpBlock>{description.touched && description.error ? description.error[0] : null}</HelpBlock>
 	          </Col>
 	        </FormGroup>
-	        </FormGroup>
 	      </Col>
 
 	      <Col md={10} mdOffset={2}>
@@ -67,26 +66,7 @@ class BookForm extends Component {
 	          	<HelpBlock>{price.touched && price.error ? price.error[0] : null}</HelpBlock>
 	          </Col>
 	        </FormGroup>
-	        </FormGroup>
 	      </Col>
-
-
-        <div className="clearfix form-actions">
-          <div className="center">
-            <span className="mr10">
-              <Button
-                bsStyle="danger" bsSize="small"
-                onClick={handleSubmit(this._handleSave)}>
-                <i className="ace-icon fa fa-check bigger-110"/>
-                Save and continue
-              </Button>
-            </span>
-            <Button href="#/campaigns" bsStyle="default" bsSize="small">
-              <i className="ace-icon fa f bigger-110"/>
-                Cancel
-            </Button>
-          </div>
-        </div>
 
         <div className="form-group">
           <div className="col-sm-offset-2 col-sm-10">
@@ -98,9 +78,19 @@ class BookForm extends Component {
             </Button>
           </div>
         </div>
-      </form>
+      </Row>
+    </form>
     )
   }
+}
+
+BookForm.propTypes = {
+  fields: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  id: PropTypes.string,
+  onEdit: PropTypes.func,
+  onNew: PropTypes.func,
+  onSave: PropTypes.func.isRequired
 }
 
 function validateParams(campaign) {
@@ -118,11 +108,10 @@ function validateParams(campaign) {
   return validate(campaign, constraints) || {}
 }
 
-BookForm.propTypes = {
-  fields: PropTypes.object.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  id: PropTypes.string,
-  onEdit: PropTypes.func,
-  onNew: PropTypes.func,
-  onSave: PropTypes.func.isRequired
-}
+BookForm = reduxForm({
+  form: 'campaignForm',
+  fields: ['id', 'name', 'description', 'price'],
+  validate: validateParams
+})(BookForm)
+
+export default BookForm

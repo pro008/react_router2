@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from "react"
+import React, { Component } from "react"
+import PropTypes from 'prop-types';
 
 import { hashHistory } from "react-router"
 import { connect } from "react-redux"
@@ -6,8 +7,6 @@ import { bindActionCreators } from 'redux'
 
 import { fetchSave, fetchGetID, clearBook } from "../book_action"
 import BookForm from "./book_form"
-
-export const fields = [ 'name', 'description', 'price' ]
 
 class BookNew extends Component{
   constructor(props) {
@@ -29,7 +28,7 @@ class BookNew extends Component{
   }
 
   render() {
-    return (<form className="form-horizontal" onSubmit={handleSubmit}>
+    return (
       <div>
         <BookForm
             onSave={this._handleSave}
@@ -42,9 +41,9 @@ class BookNew extends Component{
 BookNew.propTypes = {
   id: PropTypes.string,
   book: PropTypes.object,
-  saveCampaign: PropTypes.func.isRequired
+  saveCampaign: PropTypes.func.isRequired,
   clearBook: PropTypes.func.isRequired
-}
+};
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ fetchGetID, fetchSave, clearBook }, dispatch)
