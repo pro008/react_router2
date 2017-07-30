@@ -20,9 +20,19 @@ export function fetchBook(page, search){
   }
 }
 
+export function fetchAdd(book) {
+  return function(dispatch) {
+    dispatch({
+      type: BookConstant.FETCH_ADD_BOOK,
+      payload:  axios.post(`http://210.211.117.57/books`,
+      {name: book.name, description: book.description, price: book.price})
+    });
+  }
+}
+
 export function fetchGetID(id) {
   return (dispatch) => {
-    axios.get(`http://210.211.117.57/books/${id}`)
+    axios.get(`http://210.211.117.57/books/${id}/edit`)
     .then((resp) => {
       dispatch({ type: BookConstant.FETCH_GET_BOOK_FULFILLED, payload: resp })
     })

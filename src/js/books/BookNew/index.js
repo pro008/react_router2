@@ -5,7 +5,7 @@ import { hashHistory } from "react-router"
 import { connect } from "react-redux"
 import { bindActionCreators } from 'redux'
 
-import { fetchSave, fetchGetID, clearBook } from "../book_action"
+import { fetchSave, fetchGetID, fetchAdd, clearBook } from "../book_action"
 import BookForm from "./book_form"
 
 class BookNew extends Component{
@@ -24,7 +24,10 @@ class BookNew extends Component{
   }
 
   _handleSave(book) {
-    this.props.fetchSave(book)
+    if(this.props.id)
+      this.props.fetchSave(book)
+    else
+      this.props.fetchAdd(book)
   }
 
   render() {
@@ -46,7 +49,7 @@ BookNew.propTypes = {
 };
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchGetID, fetchSave, clearBook }, dispatch)
+  return bindActionCreators({ fetchGetID, fetchSave, fetchAdd, clearBook }, dispatch)
 }
 
 function mapStateToProps(state, ownProps) {

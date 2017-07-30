@@ -23,7 +23,7 @@ class BookInfor extends Component{
   }
 
   render() {
-    console.log("render is here");
+    console.log(this.props);
     return (
      <div>
         <Article onDelete={this._handleDelete.bind(this)} book={this.props.data}  showBtn={false} />
