@@ -1,30 +1,24 @@
-import React from "react";
+import React, { Component } from "react"
+import PropTypes from 'prop-types';
 
 import Article from "../../components/Article"
 import { connect } from "react-redux"
+import { bindActionCreators } from 'redux'
 
-import { fetchGetID, fetchDelete } from "../book_action"
+import { fetchGetID, fetchDelete, clearBook } from "../book_action"
 
-@connect((store) => {
-  return {
-    book: store.bookReducer.book
-  };
-})
-export default class BookInfor extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      page: 0,
-      pageCount: 0,
-      search: '',
-    };
-  }
+class BookInfor extends Component{
+
   componentWillMount() {
-    this.props.dispatch(fetchGetID(this.props.params.id))
+    this.props.fetchGetID(this.props.id)
+  }
+
+  componentWillUnmount() {
+    this.props.clearBook()
   }
 
   _handleDelete(id) {
-    this.props.dispatch(fetchDelete(this.props.params.id))
+    this.props.fetchDelete(this.props.id)
     this.props.history.push('/');
   }
 
@@ -37,3 +31,21 @@ export default class BookInfor extends React.Component {
     );
   }
 }
+
+BookInfor.propTypes = {
+  id: PropTypes.string,
+  book: PropTypes.object
+};
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ fetchGetID, fetchDelete, clearBook }, dispatch)
+}
+
+function mapStateToProps(state, ownProps) {
+  return {
+    id: ownProps.params.id,
+    book: state.bookReducer.book
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BookInfor)

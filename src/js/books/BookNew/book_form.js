@@ -14,7 +14,7 @@ class BookForm extends Component {
   }
 
   render() {
-    const { fields: { name, description, price }, resetForm, handleSubmit, submitting } = this.props
+    const { fields: { name, description, price }, book, handleSubmit } = this.props
     return (<form className="form-horizontal">
     	<Row>
 	  		<Col md={10} mdOffset={2}>
@@ -37,10 +37,10 @@ class BookForm extends Component {
 	      <Col md={10} mdOffset={2}>
 	        <FormGroup
 	          controlId="formControlsText"
-	          validationState={campaign_type.touched && campaign_type.error ? 'error' : null}>
-	          <label className={campaign_type.touched && campaign_type.error ?
-	            'label-role-error' : 'control-label col-xs-2'}>
-	            Description</label>
+	          validationState={description.touched && description.error ? 'error' : null}>
+	          <Col componentClass={ControlLabel} sm={2}>
+            description
+            </Col>
 	          <Col sm={8}>
 	            <FormControl type="text" {...description}/>
 	            <FormControl.Feedback />
@@ -54,10 +54,10 @@ class BookForm extends Component {
 	      <Col md={10} mdOffset={2}>
 	        <FormGroup
 	          controlId="formControlsText"
-	          validationState={campaign_type.touched && campaign_type.error ? 'error' : null}>
-	          <label className={campaign_type.touched && campaign_type.error ?
-	            'label-role-error' : 'control-label col-xs-2'}>
-	            Price</label>
+	          validationState={price.touched && price.error ? 'error' : null}>
+	          <Col componentClass={ControlLabel} sm={2}>
+            Price
+            </Col>
 	          <Col sm={8}>
 	            <FormControl type="text" {...price}/>
 	            <FormControl.Feedback />
@@ -93,7 +93,33 @@ BookForm.propTypes = {
   onSave: PropTypes.func.isRequired
 }
 
-function validateParams(campaign) {
+
+const validate = values => {
+  const errors = {}
+  if (!values.name) {
+    errors.name = 'Required'
+  } else if (values.name.length > 15) {
+    errors.name = 'Must be 15 characters or less'
+  }
+
+  if (!values.description) {
+    errors.description = 'Required'
+  } else if (values.description.length > 15) {
+    errors.description = 'Must be 15 characters or less'
+  }
+
+  if (!values.price) {
+    errors.price = 'Required'
+  } else if (isNaN(Number(values.price))) {
+    errors.price = 'Must be a number'
+  } else if (Number(values.price) > 0) {
+    errors.price = 'Sorry, it must be at least 1$'
+  }
+  
+  return errors
+}
+
+function validateParams(book) {
   let constraints = {
     name: {
       presence: true
@@ -105,11 +131,11 @@ function validateParams(campaign) {
       presence: true
     },
   }
-  return validate(campaign, constraints) || {}
+  return validate(book, constraints) || {}
 }
 
 BookForm = reduxForm({
-  form: 'campaignForm',
+  form: 'bookForm',
   fields: ['id', 'name', 'description', 'price'],
   validate: validateParams
 })(BookForm)

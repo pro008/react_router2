@@ -23,8 +23,8 @@ class BookNew extends Component{
     this.props.clearBook()
   }
 
-  _handleSave(campaign) {
-    this.props.fetchSave(campaign)
+  _handleSave(book) {
+    this.props.fetchSave(book)
   }
 
   render() {
@@ -41,7 +41,7 @@ class BookNew extends Component{
 BookNew.propTypes = {
   id: PropTypes.string,
   book: PropTypes.object,
-  saveCampaign: PropTypes.func.isRequired,
+  fetchSave: PropTypes.func.isRequired,
   clearBook: PropTypes.func.isRequired
 };
 

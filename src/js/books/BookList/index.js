@@ -2,16 +2,12 @@ import React, { PropTypes, Component } from "react";
 import { connect } from "react-redux"
 
 import ReactPaginate from 'react-paginate';
+import { bindActionCreators } from 'redux'
 
 import Article from "../../components/Article"
 import { fetchBook } from "../book_action"
 
-@connect((store) => {
-  return {
-    books: store.bookReducer.books
-  };
-})
-export default class BookList extends Component {
+class BookList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,7 +25,7 @@ export default class BookList extends Component {
 
   loadComments(){
     const self = this.state;
-    this.props.dispatch(fetchBook(self.page, self.search));
+    this.props.fetchBook(self.page, self.search);
   }
 
 
@@ -85,3 +81,21 @@ export default class BookList extends Component {
     );
   }
 }
+
+
+BookList.propTypes = {
+  id: PropTypes.string,
+  book: PropTypes.object,
+  fetchBook: PropTypes.func.isRequired
+};
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ fetchBook }, dispatch)
+}
+
+function mapStateToProps(state, ownProps) {
+  return { books: state.bookReducer.books }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(BookList)

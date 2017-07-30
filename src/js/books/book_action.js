@@ -21,11 +21,11 @@ export function fetchBook(page, search){
 }
 
 export function fetchGetID(id) {
-  return function(dispatch) {
-    dispatch({
-      type: BookConstant.FETCH_GET_BOOK,
-      payload: axios.get(`http://210.211.117.57/books/${id}`)
-    });
+  return (dispatch) => {
+    axios.get(`http://210.211.117.57/books/${id}`)
+    .then((resp) => {
+      dispatch({ type: BookConstant.FETCH_GET_BOOK_FULFILLED, payload: resp })
+    })
   }
 }
 
