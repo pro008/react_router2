@@ -1,0 +1,34 @@
+h1, h2{
+	color:black;
+}
+.colormatch{
+    margin-top:40px;
+}
+
+#cancel_panel{
+    color: #800000;
+}
+
+.btn{
+    background: #c16622;
+    color:#fff;
+}
+
+.center{
+    text-align:center;
+}
+
+
+#react-paginate ul {
+    display: inline-block;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#react-paginate li {
+    display: inline-block;
+}
+
+#react-paginate .break a {
+    cursor: default;
+}
