@@ -3,7 +3,7 @@ import axios from "axios"
 import * as BookConstant from './book_constants'
 
 export function clearBook() {
-  return { type: CampaignConstants.CLEAR_BOOK, payload: {} }
+  return { type: BookConstant.CLEAR_BOOK, payload: {} }
 }
 
 export function fetchBook(page, search){
@@ -48,20 +48,12 @@ export function fetchDelete(id) {
   }
 }
 
-export function fetchSave(book) {
+export function fetchSave(id,book) {
   return (dispatch) => {
-    if(book.id){
-      dispatch({
-        type: BookConstant.FETCH_ADD_BOOK,
-        payload:  axios.post(`http://210.211.117.57/books`,
-        {name: book.name, description: book.description, price: book.price})
-      });
-    }else {
-      dispatch({
-        type: BookConstant.FETCH_EDIT_BOOK,
-        payload:  axios.post(`http://210.211.117.57/books/${book.id}`,
-        {name: book.name, description: book.description, price: book.price})
-      });
-    }
+    dispatch({
+      type: BookConstant.FETCH_EDIT_BOOK,
+      payload:  axios.patch(`http://210.211.117.57/books/${id}`,
+      {name: book.name, description: book.description, price: book.price})
+    });
   }
 }

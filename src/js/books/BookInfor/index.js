@@ -8,6 +8,10 @@ import { bindActionCreators } from 'redux'
 import { fetchGetID, fetchDelete, clearBook } from "../book_action"
 
 class BookInfor extends Component{
+  constructor(props) {
+    super(props);
+    this._handleDelete = this._handleDelete.bind(this);
+  }
 
   componentWillMount() {
     this.props.fetchGetID(this.props.id)
@@ -23,10 +27,9 @@ class BookInfor extends Component{
   }
 
   render() {
-    console.log(this.props);
     return (
      <div>
-        <Article onDelete={this._handleDelete.bind(this)} book={this.props.data}  showBtn={false} />
+        <Article onDelete={this._handleDelete.bind(this)} book={this.props.book}  showBtn={false} />
       </div>
     );
   }

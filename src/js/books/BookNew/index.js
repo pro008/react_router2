@@ -25,12 +25,13 @@ class BookNew extends Component{
 
   _handleSave(book) {
     if(this.props.id)
-      this.props.fetchSave(book)
+      this.props.fetchSave(this.props.id, book)
     else
       this.props.fetchAdd(book)
   }
 
   render() {
+    console.log(this.props)
     return (
       <div>
         <BookForm
